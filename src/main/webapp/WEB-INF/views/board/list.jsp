@@ -35,6 +35,8 @@
                   <c:forEach items="${list}" var="board">
 	                  <tr>
 	                  	<td><c:out value="${board.bno}"/></td>
+	                  	<td><a href='/board/get?bno=<c:out value="${board.bno}"/>'>
+	                  	<c:out value="${board.title}"/></a></td>
 	                  	<td><c:out value="${board.title}"/></td>
 	                  	<td><c:out value="${board.writer}"/></td>
 	                  	<td><fmt:formatDate pattern="yyyy-MM-dd" value="${board.regdate}"/></td>
@@ -42,14 +44,53 @@
 	                  </tr>
                   </c:forEach>
                 </table>
+               
+			      
               </div>
+              
+               <div class="modal fade" id="myModel" tabindex="-1" role="dialog" aria-labelledby = "myModalLabel" aria-hidden="true">
+			      	<div class="modal-dialog">
+			      		<div class="modal-content">
+			      			<div class="modal-header">
+			      				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+			      				<h4 class="modal-title" id="myModalLabel">Modal title</h4>
+			      			</div>
+			      			<div class="modal-body">처리가 완료되었습니다.</div>
+			      			<div class="modal-footer">
+			      				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			      				<button type="button" class="btn btn-primary">Save changes</button>
+			      			</div>
+			      		</div>
+			      	</div>
+			    </div>
+			      
             </div>
           </div>
 
         </div>
         <!-- /.container-fluid -->
 
-      </div>
+      
       <!-- End of Main Content -->
+      
+      
+<script type="text/javascript">
+$(document).ready(function() {
+	var result = '<c:out value="${result}"/>';
 
+	checkModal(result);
+	
+	function checkModal(result) {
+		if(result ==='') {
+			return;
+		}
+		
+		if(parseInt(result)>0) {
+			$(".modal-body").html("게시글" + parseInt(result) + " 번이 등록되었습니다.");
+		}
+		
+		$("#myModal").modal("show");
+	}
+});
+</script>
  <%@include file="../include/footer.jsp"%>
